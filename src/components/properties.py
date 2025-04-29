@@ -1,6 +1,6 @@
 from tkinter import messagebox
 from typing import Dict
-from globals import SRC_PATH
+from components.globals import SRC_PATH
 import os
 import json
 

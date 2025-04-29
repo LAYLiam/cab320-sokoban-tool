@@ -2,6 +2,7 @@ import tkinter as tk
 import os
 from components.properties import Properties
 from components.globals import VISUALIZE, TABOO, SEQUENCE, H1
+from windows.visualize import Visualize
 
 class App:
     """
@@ -21,7 +22,7 @@ class App:
     def __init__(self) -> None:
         self.properties: Properties = Properties()
         self.root: tk.Tk = tk.Tk()
-        self.root.title("Sokoban Tool")
+        self.root.title("SKBN")
         self.header = tk.Frame(self.root).pack(side=tk.TOP, fill=tk.X)
         self.body = tk.Frame(self.root).pack(side=tk.TOP, fill=tk.BOTH)
         tk.Label(self.header, text="Sokoban Tool", font=H1).pack(side=tk.TOP, pady=10)
@@ -110,8 +111,8 @@ class App:
     def click_event_listbox(self, e) -> None:
         wh = self.current_warehouses[self.listbox.curselection()[0]]
         path = self.properties.dir_path + "/" + wh
-        #new_window = tk.Toplevel(self.root)
-        if (VISUALIZE == self.options_var.get()): print("Visualize")
+        new_window = tk.Toplevel(self.root)
+        if (VISUALIZE == self.options_var.get()): Visualize(new_window, path)
         elif (TABOO == self.options_var.get()): print("Taboo")
         elif (SEQUENCE == self.options_var.get()): print("Sequence")
 

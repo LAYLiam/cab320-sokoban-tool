@@ -2,8 +2,8 @@ import tkinter as tk
 from PIL import Image
 from PIL import ImageTk
 from typing import Tuple, Dict
-from globals import IMAGES, BUTTONS, TABOO, INVAILD_TABOO_REPR_CHARS, WALL, BLANK
-from sokoban import Warehouse
+from components.globals import IMAGES, BUTTONS, TABOO, INVAILD_TABOO_REPR_CHARS, WALL, BLANK
+from components.sokoban import Warehouse
 
 class Board:
     """ 
@@ -76,11 +76,11 @@ class Board:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    path = ""
+    path = "C:\\Users\\liaml\\OneDrive\\Desktop\\_\\CAB302\\cab320-sokoban-tool\\warehouses\\wh_1.txt"
     board = Board(root, path, config={BUTTONS: True, TABOO: True})
 
     def get_repr():
-        return print(board.immutable_board)
+        return print(board.__repr__())
 
     tk.Button(root, text="Click for repr", command=get_repr).pack()
     root.mainloop()
