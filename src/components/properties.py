@@ -1,5 +1,6 @@
 from tkinter import messagebox
 from typing import Dict
+from globals import SRC_PATH
 import os
 import json
 
@@ -10,7 +11,7 @@ class Properties:
         Saves the current directory for future use.
     """
     def __init__(self):
-        self.properties_json = "\\".join(os.path.realpath(__file__).split('\\')[:-2]) + "\\properties.json"
+        self.properties_json = SRC_PATH + "\\properties.json"
         print(self.properties_json)
         self.dir_path = None
         self.read_json() 
