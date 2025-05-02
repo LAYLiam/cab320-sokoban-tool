@@ -2,22 +2,24 @@ import tkinter as tk
 from PIL import Image
 from PIL import ImageTk
 from typing import Tuple, Dict
-from components.globals import IMAGES, BUTTONS, TABOO, INVAILD_TABOO_REPR_CHARS, WALL, BLANK
-from components.sokoban import Warehouse
+from src.components.globals import IMAGES, BUTTONS, TABOO, INVAILD_TABOO_REPR_CHARS, WALL, BLANK
+from src.components.sokoban import Warehouse
 
 class Board:
     """ 
         Creates a new board instance, which is a 
         modifiable representation of the .txt warehouse.
     """
-    def __init__(self, root: tk.Frame, path: str, config=None) -> None:
+    def __init__(self, root: tk.Frame, path: str, config=None, side=tk.TOP, text_field=None) -> None:
         self.wh = Warehouse(); self.wh.load_warehouse(path)
         self.immutable_board = self.board = self.wh.as_array()
         self.root = root
         self.gui = tk.Frame(self.root).pack()
         self.path = path
         self.config: Dict[str: bool] = config if config != None else {BUTTONS: False, TABOO: False}
+        self.side = side
         self.tiles = {}
+        self.text_field = text_field
         self.set_gui()
     
     def set_gui(self) -> None:
@@ -27,7 +29,7 @@ class Board:
             If the configuration has buttons enabled, each of the tiles
             will become buttons, otherwise labels are used to display images. 
         """
-        board = tk.Frame(self.root); board.pack()
+        board = tk.Frame(self.root); board.pack(side=self.side)
         for y in range(self.wh.nrows):
             for x in range(self.wh.ncols):
                 img = Image.open(IMAGES[self.board[y][x]])
@@ -58,11 +60,19 @@ class Board:
         c = self.board[y][x] if self.board[y][x] == WALL else BLANK
         button, image, taboo = self.tiles[key]
         if (not taboo and self.immutable_board[y][x] not in INVAILD_TABOO_REPR_CHARS):
-            bg = "red"; c = "X"
+            bg = "red"; c = "X"; 
         else: bg = self.root.cget('bg')
-        self.board[y][x] = c
         button.config(bg=bg)
         self.tiles[key] = (button, image, not taboo)
+        self.board[y][x] = c
+        self.update_text_field(self.__str__())
+
+    def update_text_field(self, text: str) -> None:
+        if self.text_field != None: 
+            self.text_field.config(state=tk.NORMAL)
+            self.text_field.delete('1.0', tk.END)
+            self.text_field.insert(tk.END, text)
+            self.text_field.config(state=tk.DISABLED)
 
     def reset(self) -> None:
         """ Reset the board back to original .txt warehouse. """

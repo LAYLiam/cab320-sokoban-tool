@@ -3,6 +3,7 @@ import os
 from components.properties import Properties
 from components.globals import VISUALIZE, TABOO, SEQUENCE, H1
 from windows.visualize import Visualize
+from windows.taboo import Taboo
 
 class App:
     """
@@ -82,7 +83,9 @@ class App:
         self.listbox.bind("<Double-1>", self.click_event_listbox)
         self.update_warehouses()
         self.listbox.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-        tk.Button(self.header, text="Change Folder", command=lambda:self.update_warehouses(new_dir=True)).pack(side=tk.BOTTOM, fill=tk.X)
+        tk.Button(self.header, text="Change Folder", 
+                  command=lambda:self.update_warehouses(new_dir=True)
+                  ).pack(side=tk.BOTTOM, fill=tk.X)
         listing.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
     def update_warehouses(self, new_dir=False) -> None:
@@ -113,7 +116,7 @@ class App:
         path = self.properties.dir_path + "/" + wh
         new_window = tk.Toplevel(self.root)
         if (VISUALIZE == self.options_var.get()): Visualize(new_window, path)
-        elif (TABOO == self.options_var.get()): print("Taboo")
+        elif (TABOO == self.options_var.get()): Taboo(new_window, path)
         elif (SEQUENCE == self.options_var.get()): print("Sequence")
 
 if __name__ == "__main__":
