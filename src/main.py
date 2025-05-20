@@ -4,6 +4,8 @@ from components.properties import Properties
 from components.globals import VISUALIZE, TABOO, SEQUENCE, H1
 from windows.visualize import Visualize
 from windows.taboo import Taboo
+from windows.sequence import Sequence
+from windows.pasteboard import PasteBoard
 
 class App:
     """
@@ -44,11 +46,12 @@ class App:
         """ Creates a searchbar for users to seach Sokoban games by name. """
         search = tk.Frame(self.header)
         self.search_var = tk.StringVar()
-        self.search_var.trace_add("write", self.update_searchbar)
+        self.search_var.trace_add("write", self.on_update_searchbar)
+        tk.Label(search, text='Filter: ').pack(side=tk.LEFT)
         tk.Entry(search, textvariable=self.search_var).pack(side=tk.TOP, fill=tk.X)
         search.pack(side=tk.TOP, fill=tk.X)
 
-    def update_searchbar(self, var, index, mode) -> None:
+    def on_update_searchbar(self, var, index, mode) -> None:
         """ 
             Updates listbox, when searchbar is modified, 
             to only show searched Sokoban games by their name. 
@@ -69,7 +72,7 @@ class App:
         tk.Radiobutton(options, text="Visualize", variable=self.options_var, value=VISUALIZE).pack(side=tk.TOP, anchor=tk.NW, padx=10, pady=(10,0))
         tk.Radiobutton(options, text="Taboo", variable=self.options_var, value=TABOO).pack(side=tk.TOP, anchor=tk.NW, padx=10)
         tk.Radiobutton(options, text="Sequence", variable=self.options_var, value=SEQUENCE).pack(side=tk.TOP, anchor=tk.NW, padx=10)
-        tk.Button(options, text="Paste Board").pack(side=tk.BOTTOM, fill=tk.X)
+        tk.Button(options, text="Paste Board", command=lambda: PasteBoard(tk.Toplevel(self.root))).pack(side=tk.BOTTOM, fill=tk.X)
         options.pack(side=tk.LEFT, fill=tk.Y)
 
     def set_listbox(self) -> None:
@@ -98,6 +101,7 @@ class App:
         self.warehouses = self.current_warehouses = [
             wh for wh in os.listdir(self.properties.dir_path) 
             if wh.split('.')[-1] == "txt"]
+        self.on_update_searchbar(None, None, None)
         self.update_listbox()
 
     def update_listbox(self) -> None:
@@ -112,12 +116,17 @@ class App:
             self.listbox.insert(i + 1, name)
 
     def click_event_listbox(self, e) -> None:
+        """
+            Adds an event listener to the listbox.
+            If any row is double-clicked, perform action according to 
+            radio option selected on the left-hand-side.
+        """
         wh = self.current_warehouses[self.listbox.curselection()[0]]
         path = self.properties.dir_path + "/" + wh
         new_window = tk.Toplevel(self.root)
         if (VISUALIZE == self.options_var.get()): Visualize(new_window, path)
         elif (TABOO == self.options_var.get()): Taboo(new_window, path)
-        elif (SEQUENCE == self.options_var.get()): print("Sequence")
+        elif (SEQUENCE == self.options_var.get()): Sequence(new_window, path)
 
 if __name__ == "__main__":
     app: App = App()

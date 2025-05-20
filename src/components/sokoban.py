@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from src.components.globals import TARGET, PLAYER, BOX, WALL, PLAYER_ON_TARGET, BOX_ON_TARGET
+from src.components.globals import TARGET, PLAYER, BOX, WALL, PLAYER_ON_TARGET, BOX_ON_TARGET, X
 
 """
     This class handles parsing .txt file warehouses.
@@ -45,6 +45,7 @@ class Warehouse:
         self.weights: List[int] = []
         self.targets: List[Tuple[int, int]] = []
         self.walls: List[Tuple[int, int]] = []
+        self.taboo: List[Tuple[int, int]] = []
         self.ncols: int = None
         self.nrows: int = None
 
@@ -59,6 +60,7 @@ class Warehouse:
         clone.weights = self.weights
         clone.targets = self.targets
         clone.walls = self.walls
+        clone.taboo = self.taboo 
         clone.ncols = self.ncols
         clone.nrows = self.nrows
         return clone
@@ -97,6 +99,7 @@ class Warehouse:
                 elif char == WALL: self.walls.append((r, c))
                 elif char == PLAYER_ON_TARGET: self.worker = (r, c); self.targets.append((r, c))
                 elif char == BOX_ON_TARGET: self.boxes.append((r, c)); self.targets.append((r, c))
+                elif char == X: self.taboo.append((r, c))
         self.ncols = max({cell[1] for cell in self.walls}) + 1
 
     def as_array(self, walls_only=False) -> List[str]:
@@ -115,7 +118,8 @@ class Warehouse:
                 if box in self.targets: insert(grid, box, BOX_ON_TARGET)
                 else: insert(grid, box, BOX)
             if self.worker in self.targets: insert(grid, self.worker, PLAYER_ON_TARGET)
-            else: insert(grid, self.worker, PLAYER)
+            elif self.worker != None: insert(grid, self.worker, PLAYER)
+            for taboo in self.taboo: insert(grid, taboo, X)
         return grid
 
     def __str__(self):
