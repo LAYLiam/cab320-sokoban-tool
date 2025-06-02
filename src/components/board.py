@@ -2,11 +2,8 @@ import tkinter as tk
 from PIL import Image
 from PIL import ImageTk
 from typing import Tuple, Dict
-from src.components.globals import (
-    IMAGES, BUTTONS, TABOO, INVAILD_TABOO_REPR_CHARS, 
-    WALL, BLANK, X, BOX, BOX_ON_TARGET, TARGET, PLAYER, 
-    PLAYER_ON_TARGET, PLAYER_ON_TARGET2)
-from src.components.sokoban import Warehouse
+from components.globals import *
+from components.sokoban import Warehouse
 
 class Board:
     """ 

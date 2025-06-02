@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import simpledialog
 import time
 import threading
-from src.components.board import Board 
-from src.components.globals import H1, BUTTONS, TABOO, DIRECTIONS
+from components.board import Board 
+from components.globals import H1, BUTTONS, TABOO, DIRECTIONS
 
 class Sequence:
     """ 
@@ -16,7 +16,7 @@ class Sequence:
         self.root = root
         self.root.title("SKBN - Sequence Player Tool")
         wh_name = (path.split('/')[-1]).split('.txt')[0]
-        tk.Label(self.root, text=f"Sequencer for {"wh_name"}", font=H1).pack(side=tk.TOP, pady=(10, 0))
+        tk.Label(self.root, text=f"Sequencer for {wh_name}", font=H1).pack(side=tk.TOP, pady=(10, 0))
         self.moves = []
         self.moves_index = 0
         self.player_status = tk.StringVar(); self.player_status.set("Play")

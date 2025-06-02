@@ -1,6 +1,6 @@
 import tkinter as tk
-from src.components.board import Board 
-from src.components.globals import H1
+from components.board import Board 
+from components.globals import H1
 
 class Visualize:
     """ Lets users graphically view a Sokoban warehouse. """

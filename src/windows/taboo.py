@@ -1,7 +1,7 @@
 import tkinter as tk
 import time
-from src.components.board import Board 
-from src.components.globals import H1, BUTTONS, TABOO
+from components.board import Board 
+from components.globals import H1, BUTTONS, TABOO
 
 class Taboo:
     """ 

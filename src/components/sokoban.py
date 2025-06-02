@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from src.components.globals import TARGET, PLAYER, BOX, WALL, PLAYER_ON_TARGET, BOX_ON_TARGET, X
+from components.globals import TARGET, PLAYER, BOX, WALL, PLAYER_ON_TARGET, BOX_ON_TARGET, X
 
 """
     This class handles parsing .txt file warehouses.

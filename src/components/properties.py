@@ -12,7 +12,6 @@ class Properties:
     """
     def __init__(self):
         self.properties_json = SRC_PATH + "\\properties.json"
-        print(self.properties_json)
         self.dir_path = None
         self.read_json() 
         
