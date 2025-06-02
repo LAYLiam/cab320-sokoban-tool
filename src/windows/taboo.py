@@ -9,7 +9,7 @@ class Taboo:
         are classified as 'taboo'. Taboo within the context of cab320 means that if a box
         were to enter this cell, it would be stuck there (i.e., in a corner)/
     """
-    def __init__(self, root: tk.Tk, path: str):
+    def __init__(self, root: tk.Tk, path: str) -> None:
         self.path = path
         self.root = root
         self.root.title("SKBN - Taboo Cell Finder Tool")

@@ -4,7 +4,7 @@ from components.globals import H1
 
 class Visualize:
     """ Lets users graphically view a Sokoban warehouse. """
-    def __init__(self, root: tk.Tk, path: str):
+    def __init__(self, root: tk.Tk, path: str) -> None:
         self.root = root
         self.root.title("SKBN - Visualizer Tool")
         wh_name = (path.split('/')[-1]).split('.txt')[0]

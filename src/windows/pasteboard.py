@@ -4,7 +4,7 @@ from components.globals import H1, LEGAL_CHARS
 
 class PasteBoard:
     """ Lets users graphically view a Sokoban warehouse from pasting as string. """
-    def __init__(self, root: tk.Tk):
+    def __init__(self, root: tk.Tk) -> None:
         self.root = root
         self.root.title("SKBN - Visualizer Tool")
         tk.Label(self.root, text="Build From Paste", font=H1).pack(side=tk.TOP, pady=(10,0), padx=50)
@@ -43,7 +43,3 @@ class PasteBoard:
         self.boardview.destroy(); self.boardview = tk.Frame(self.root); self.boardview.pack(side=tk.TOP)
         board = Board(self.boardview, None, build_warehouse_from_array=as_array)
         self.root.mainloop()
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    pasteboard = PasteBoard(root)

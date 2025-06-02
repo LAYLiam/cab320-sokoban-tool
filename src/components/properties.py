@@ -10,7 +10,7 @@ class Properties:
         all Sokoban warehouse .txt files are currently stored.
         Saves the current directory for future use.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.properties_json = SRC_PATH + "\\properties.json"
         self.dir_path = None
         self.read_json() 

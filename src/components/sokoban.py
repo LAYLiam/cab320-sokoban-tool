@@ -49,7 +49,7 @@ class Warehouse:
         self.ncols: int = None
         self.nrows: int = None
 
-    def copy(self):
+    def copy(self) -> None:
         """
             Creates duplicate of a warehouse without having to load .txt file.
             Returns a new Warehouse instance.
@@ -122,7 +122,7 @@ class Warehouse:
             for taboo in self.taboo: insert(grid, taboo, X)
         return grid
 
-    def __str__(self):
+    def __str__(self) -> str:
         """ Return a string representation of warehouse board. """
         return "\n".join(["".join(r) for r in self.as_array()])
 

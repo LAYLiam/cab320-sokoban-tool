@@ -6,6 +6,7 @@ from windows.visualize import Visualize
 from windows.taboo import Taboo
 from windows.sequence import Sequence
 from windows.pasteboard import PasteBoard
+from windows.buildboard import BuildBoard
 
 class App:
     """
@@ -19,7 +20,9 @@ class App:
         2. Taboo: users can click on Sokoban tiles to identify them as taboo.
         3. Sequence: users can play a Sokoban game, or paste in a list of actions to watch.
         4. Paste Board: users can paste a string Sokoban, and visualize it.
+        5. Build Board: users can create a new board to add to the list of warehouses.
 
+        To create .exe: pyinstaller --onefile --windowed --add-data "assets;assets" sokoban-tool.py
         Please read the README.md for more general details.
     """
     def __init__(self) -> None:
@@ -73,6 +76,7 @@ class App:
         tk.Radiobutton(options, text="Taboo", variable=self.options_var, value=TABOO).pack(side=tk.TOP, anchor=tk.NW, padx=10)
         tk.Radiobutton(options, text="Sequence", variable=self.options_var, value=SEQUENCE).pack(side=tk.TOP, anchor=tk.NW, padx=10)
         tk.Button(options, text="Paste Board", command=lambda: PasteBoard(tk.Toplevel(self.root))).pack(side=tk.BOTTOM, fill=tk.X)
+        tk.Button(options, text="Build Board", command=lambda: BuildBoard(tk.Toplevel(self.root))).pack(side=tk.BOTTOM, fill=tk.X)
         options.pack(side=tk.LEFT, fill=tk.Y)
 
     def set_listbox(self) -> None:
@@ -90,6 +94,7 @@ class App:
                   command=lambda:self.update_warehouses(new_dir=True)
                   ).pack(side=tk.BOTTOM, fill=tk.X)
         listing.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.listbox.bind("<Button-3>", self.click_event_listbox_right_click)
 
     def update_warehouses(self, new_dir=False) -> None:
         """
@@ -127,6 +132,16 @@ class App:
         if (VISUALIZE == self.options_var.get()): Visualize(new_window, path)
         elif (TABOO == self.options_var.get()): Taboo(new_window, path)
         elif (SEQUENCE == self.options_var.get()): Sequence(new_window, path)
+
+    def click_event_listbox_right_click(self, e):
+        """ 
+            Adds a an event listener to the listbox.
+            If the listbox is right-clicked, an option comes up to refresh it.
+            If the user clicks refresh? the listbox refreshes.
+        """
+        menu = tk.Menu(self.root, tearoff=0)
+        menu.add_command(label="Refresh?", command=self.update_warehouses)
+        menu.tk_popup(e.x_root, e.y_root)
 
 if __name__ == "__main__":
     app: App = App()
