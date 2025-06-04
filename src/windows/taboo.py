@@ -12,6 +12,7 @@ class Taboo:
     def __init__(self, root: tk.Tk, path: str) -> None:
         self.path = path
         self.root = root
+        self.root.focus_force()
         self.root.title("SKBN - Taboo Cell Finder Tool")
         wh_name = (path.split('/')[-1]).split('.txt')[0]
         tk.Label(self.root, text=f"Taboo Cell Finder for {wh_name}", font=H1).pack(side=tk.TOP, pady=10)

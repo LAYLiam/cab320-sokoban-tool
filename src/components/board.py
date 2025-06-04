@@ -17,7 +17,8 @@ class Board:
         if build_warehouse_from_array == None: self.wh.load_warehouse(path)
         else: self.wh.from_lines(build_warehouse_from_array)
         self.immutable_board = self.board = self.wh.as_array()
-        self.player = self.wh.worker[1], self.wh.worker[0]
+        print(self.wh.worker)
+        self.player = None if self.wh.worker is None else (self.wh.worker[1], self.wh.worker[0])
 
         # Save parameters for board visualization 
         self.root = root

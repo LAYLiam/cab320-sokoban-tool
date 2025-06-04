@@ -28,6 +28,7 @@ class App:
     def __init__(self) -> None:
         self.properties: Properties = Properties()
         self.root: tk.Tk = tk.Tk()
+        self.root.focus_force()
         self.root.title("SKBN")
         self.header = tk.Frame(self.root).pack(side=tk.TOP, fill=tk.X)
         self.body = tk.Frame(self.root).pack(side=tk.TOP, fill=tk.BOTH)

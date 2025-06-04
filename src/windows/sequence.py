@@ -14,6 +14,7 @@ class Sequence:
     def __init__(self, root: tk.Tk, path: str):
         self.path = path
         self.root = root
+        self.root.focus_force()
         self.root.title("SKBN - Sequence Player Tool")
         wh_name = (path.split('/')[-1]).split('.txt')[0]
         tk.Label(self.root, text=f"Sequencer for {wh_name}", font=H1).pack(side=tk.TOP, pady=(10, 0))
@@ -81,7 +82,7 @@ class Sequence:
                   command=lambda:self.to_clipboard(
                       text=self.impossible_status.get() 
                       if self.impossible_status.get() != "" 
-                      else self.board.__str__())).pack(fill=tk.X)
+                      else self.board.__repr__())).pack(fill=tk.X)
         
     def change_mode(self) -> None:
         # Sequence mode is #1 or True

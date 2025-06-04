@@ -157,15 +157,17 @@ class Builder:
         """
         rows = [row + '\n' for row in self.as_rows()]
         self.status.set("Saving...")
-        self.root.update()
 
         # Request for filename & absolute path from pop-up window, then        
         # Write rows to txt file and save
         filename = filedialog.asksaveasfilename()
-        if filename[-4:] != ".txt": filename += ".txt"
-        with open(filename, "w") as file:
-            file.writelines(rows)
+        if filename != "": 
+            if filename[-4:] != ".txt": filename += ".txt"
+            with open(filename, "w") as file:
+                file.writelines(rows)
+        else: self.status.set("Cancelled...")
 
+        self.root.update()
         time.sleep(0.5)
         self.status.set("")
         pass

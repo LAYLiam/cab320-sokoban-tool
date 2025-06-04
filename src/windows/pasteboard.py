@@ -1,11 +1,12 @@
 import tkinter as tk
 from components.board import Board 
-from components.globals import H1, LEGAL_CHARS
+from components.globals import H1, LEGAL_CHARS, WALL
 
 class PasteBoard:
     """ Lets users graphically view a Sokoban warehouse from pasting as string. """
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
+        self.root.focus_force()
         self.root.title("SKBN - Visualizer Tool")
         tk.Label(self.root, text="Build From Paste", font=H1).pack(side=tk.TOP, pady=(10,0), padx=50)
         self.set_content()
@@ -30,6 +31,13 @@ class PasteBoard:
             self.content.update()
             return
         
+        # Make sure that there is a wall character to determine
+        # where the weights end and when the board starts
+        if (not(WALL in self.paste_var.get())):
+            self.status.set(f"No wall character found!")
+            self.content.update()
+            return
+
         # Iterate over ever char, and make sure there are only parsable chars
         as_array = self.paste_var.get().replace('\'', '').replace('"', '').split('\\n')
         for char in "".join(as_array):
